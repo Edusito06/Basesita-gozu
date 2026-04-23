@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Mascotas</title>
+    <!-- Bootstrap CSS (por convención en los laboratorios de GTICS) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="container mt-5">
+
+    <h2 class="mb-4">Lista de Mascotas (Lab 4)</h2>
+
+    <!-- AQUÍ SE ATRAPA EL REDIRECT ATTRIBUTE -->
+    <div th:if="${mensaje != null}" class="alert alert-success alert-dismissible fade show" role="alert">
+        <span th:text="${mensaje}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <a th:href="@{/mascotas/nuevo}" class="btn btn-primary mb-3">Nueva Mascota</a>
+
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Especie</th>
+                <th>Raza</th>
+                <th>Edad</th>
+                <!-- AQUI MOSTRAMOS LA RELACIÓN (@ManyToOne) -->
+                <th>Dueño</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="mascota : ${lista}">
+                <td th:text="${mascota.id}"></td>
+                <td th:text="${mascota.nombre}"></td>
+                <td th:text="${mascota.especie}"></td>
+                <td th:text="${mascota.raza}"></td>
+                <td th:text="${mascota.edad}"></td>
+                <!-- ACCEDEMOS AL NOMBRE DEL DUEÑO A TRAVÉS DE LA RELACIÓN -->
+                <td th:text="${mascota.dueno.nombre}"></td>
+                <td>
+                    <span th:if="${mascota.estado}" class="badge bg-success">Activo</span>
+                    <span th:unless="${mascota.estado}" class="badge bg-danger">Inactivo</span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

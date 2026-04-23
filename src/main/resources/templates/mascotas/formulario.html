@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Nueva Mascota</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="container mt-5">
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h2 class="mb-4">Registrar Nueva Mascota</h2>
+            
+            <form method="post" th:action="@{/mascotas/guardar}">
+                
+                <div class="mb-3">
+                    <label class="form-label">Nombre de la Mascota:</label>
+                    <input type="text" name="nombre" class="form-control" required>
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label">Especie:</label>
+                    <input type="text" name="especie" class="form-control" required>
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label">Raza:</label>
+                    <input type="text" name="raza" class="form-control" required>
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label">Edad:</label>
+                    <input type="number" name="edad" class="form-control" required>
+                </div>
+
+                <!-- SELECT PARA EL MANY-TO-ONE -->
+                <div class="mb-3">
+                    <label class="form-label">Dueño:</label>
+                    <select name="dueno.id" class="form-select" required>
+                        <option value="">-- Seleccione un Dueño --</option>
+                        <option th:each="d : ${listaDuenos}" 
+                                th:value="${d.id}" 
+                                th:text="${d.nombre}"></option>
+                    </select>
+                </div>
+
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-success">Guardar</button>
+                    <a th:href="@{/mascotas}" class="btn btn-secondary">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>
